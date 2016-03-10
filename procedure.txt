@@ -1,0 +1,44 @@
+CONTROLLER
+#改ip地址（eth0作为管理网络，eth1作为外网）
+vi /etc/network/interfaces
+#重启网卡
+ifdown eth0 && ifup eth0
+#更改host名字
+vi /etc/hosts
+#更改NTP源（视具体环境而定）
+vi /etc/chrony/chrony.conf
+#编辑ip
+vi /etc/mysql/conf.d/mysqld_openstack.cnf
+#重启mysql数据库
+service mysql restart
+#编辑ip
+vi /etc/mongodb.conf
+#重启mongobd
+service mongodb stop
+rm /var/lib/mongodb/journal/prealloc.*
+service mongodb start
+#编辑ip
+vi /etc/nova/nova.conf
+#同步数据库
+su -s /bin/sh -c "nova-manage db sync" nova
+(出现错误No handlers could be found for logger "oslo_config.cfg")
+#编辑ip
+/etc/neutron/plugins/ml2/linuxbridge_agent.ini（两个地方）
+#同步数据库
+su -s /bin/sh -c "neutron-db-manage --config-file /etc/neutron/neutron.conf \
+  --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head" neutron
+（注意vnc）
+
+COMPUTE
+#编辑ip（eth0作为管理网络，eth1作为外网）
+vi /etc/network/interfaces
+#重启网卡
+ifdown eth0 && ifup eth0
+ifdown eth1 && ifup eth1
+#更改host名字
+vi /etc/hosts
+#编辑ip
+vi /etc/nova/nova.conf(两个地方)
+#编辑ip(只有一块网卡就不需要改了)
+vi /etc/neutron/plugins/ml2/linuxbridge_agent.ini（两个地方）
+

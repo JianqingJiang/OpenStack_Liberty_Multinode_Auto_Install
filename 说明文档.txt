@@ -1,0 +1,18 @@
+虚拟机器格式基于ovf 1.0
+运行之后不要改动
+/etc/network/interfaces
+/etc/hosts
+/etc/hostname
+/etc/chrony/chrony.conf
+的格式（内容可以改）
+
+controller系统根目录下有controller.sh controller-restart.sh
+controller.sh 运行的时候跟参数类型是controller的管理网卡，管理ip，子网掩码，网关ip，出口网卡地址（如eth1）,compute的数量，compute的ip地址（有几个写几个）
+接着运行 controller-restart.sh
+
+
+compute系统根目录下有compute.sh compute-restart.sh
+compute.sh 运行的时候跟参数类型是compute的管理ip，子网掩码，网关ip，controller ip地址 ,自己现在的机器是compute几（数字），compute的数量，compute的ip地址（有几个写几个）
+接着运行 compute-restart.sh
+
+*目前1.0 脚本
